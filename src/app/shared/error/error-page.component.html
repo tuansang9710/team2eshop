@@ -1,0 +1,19 @@
+<div id="notfound">
+  <div class="notfound">
+    <div class="notfound-404">
+      <h1 *ngIf="params.id !== 'notfound' && params.id !== 'connectionrefused'">{{params.id}}</h1>
+      <h1 style="font-size: 3em; width: 100%;" *ngIf="params.id === 'notfound'">Page not found</h1>
+      <h1 style="font-size: 3em; width: 100%;" *ngIf="params.id === 'connectionrefused'">ERR CONNECTION REFUSED</h1>
+    </div>
+    <h2>Oops! Nothing was found</h2>
+    <p>The page you are looking for might have been removed had its name changed or is temporarily unavailable. <a
+        class="pointer" style="color: #4fbfa8" (click)="returnToHome()">Return
+        to homepage</a></p>
+    <div class="notfound-social">
+      <a class="pointer" style="color: #4fbfa8"><i class="fa fa-facebook"></i></a>
+      <a class="pointer" style="color: #4fbfa8"><i class="fa fa-twitter"></i></a>
+      <a class="pointer" style="color: #4fbfa8"><i class="fa fa-pinterest"></i></a>
+      <a class="pointer" style="color: #4fbfa8"><i class="fa fa-google-plus"></i></a>
+    </div>
+  </div>
+</div>

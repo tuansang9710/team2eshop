@@ -1,0 +1,25 @@
+<body>
+  <!-- Navbar Start-->
+  <mat-progress-bar mode="determinate" [value]="loader.progress$|async"></mat-progress-bar>
+  <header class="nav-holder make-sticky">
+    <app-t2-header></app-t2-header>
+  </header>
+  <!-- Navbar End-->
+  <div class="container wrapper bar padding-big">
+    <!-- Breadcrumb Start-->
+    <div class="row">
+      <div class="breadcrumb flat ml-3" *ngIf="breadcrumbList">
+        <ng-container *ngFor="let item of breadcrumbList.name; let i = index">
+          <a [routerLink]="['']" *ngIf="i !== breadcrumbList.name.length - 1" class="active pointer"> {{ item }}</a>
+          <a class="pointer" *ngIf="i === breadcrumbList.name.length - 1">{{ item }}</a>
+        </ng-container>
+      </div>
+    </div>
+    <!-- Breadcrumb End-->
+    <router-outlet></router-outlet>
+  </div>
+  <button md-raised-button class="md-raised md-primary mr-3 uk-margin-bottom" style="float: right" (click)="onTop()">Edit</button>
+  <footer class="main-footer">
+    <app-t2-footer></app-t2-footer>
+  </footer>
+</body>

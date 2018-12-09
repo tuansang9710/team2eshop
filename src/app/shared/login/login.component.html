@@ -1,0 +1,93 @@
+<!--Login Modal-->
+<ng-template [ngIf]="type == 'login'">
+  <div class="modal-header ">
+    <h4 class="modal-title">Login</h4><button aria-label="Close" class="close" type="button" (click)="btnCancel()"><span
+        aria-hidden="true">×</span></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="loginForm" (ngSubmit)=" btnLogin()">
+      <div *ngIf="!!lg.email.errors && !!lg.email.errors.isWrong" class="invalid-feedback text-center">Username or
+        Password is incorrect.</div>
+      <div class="form-group" style="padding-top: 1em">
+        <label for="email">Email/Phone</label>
+        <input formControlName="email" type="email" class="form-control" [ngClass]="{ 'is-invalid': submittedLogin && !!lg.email.invalid }" />
+        <span></span>
+        <div *ngIf="submittedLogin && !!lg.email.errors" class="invalid-feedback">
+          <div *ngIf="!!lg.email.errors.required">Email or Phone is required.</div>
+        </div>
+      </div>
+      <div class="form-group" style="padding-top: 1em">
+        <label for="password">Password</label>
+        <input formControlName="password" type="password" (keyup)="onRemoveIsWrong()" class="form-control" [ngClass]="{ 'is-invalid': submittedLogin && (!!lg.password.invalid || (!!lg.email.errors && !!lg.email.errors.isWrong))}" />
+        <div *ngIf="submittedLogin && !!lg.password.errors" class="invalid-feedback">
+          <div *ngIf="!!lg.password.errors.required">Password is required.</div>
+          <div *ngIf="!!lg.password.errors.minlength">Password must be at least 8 characters.</div>
+          <div *ngIf="!!lg.password.errors.maxlength">Password cannot exceed 25 characters.</div>
+        </div>
+      </div>
+      <div class="text-center" style="padding-top: 1em">
+        <button class="btn btn-template-outlined" (click)="btnLogin()"><i class="fa fa-sign-in"></i> Log in</button>
+      </div>
+      <p class="text-center text-muted mt-3">Not registered yet?</p>
+      <p class="text-center text-muted"><a class="pointer" (click)="changeSignUp()"><strong>Register now</strong></a>! It is easy
+        and done in 1&nbsp;minute and gives you access to special discounts and much more!</p>
+    </form>
+  </div>
+</ng-template>
+
+
+<!--Register Modal-->
+<ng-template [ngIf]="type == 'register'">
+  <div class="modal-header">
+    <h4 class="modal-title">Register</h4><button aria-label="Close" class="close" type="button" (click)="btnCancel()"><span
+        aria-hidden="true">×</span></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="registerForm">
+      <div *ngIf="!!rg.email.errors && !!rg.email.errors.isWrong" class="invalid-feedback text-center">Account already
+        exists</div>
+      <div class="form-group" style="padding-top: 1em">
+        <label for="name-login">Name</label>
+        <input formControlName="username" type="text" (keyup)="onRemoveIsWrong()" class="form-control" [ngClass]="{ 'is-invalid': submittedResgister && (!!rg.username.errors || (!!rg.email.errors && !!rg.email.errors.isWrong))}" />
+        <div *ngIf="submittedResgister && !!rg.username.errors" class="invalid-feedback">
+          <div *ngIf="!!rg.username.errors.required">First Name is required.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email-login">Phone Number</label>
+        <input formControlName="phoneNumber" type="text" (keyup)="onRemoveIsWrong()" class="form-control" class="form-control"
+          [ngClass]="{ 'is-invalid': submittedResgister && (!!rg.phoneNumber.invalid || (!!rg.email.errors && !!rg.email.errors.isWrong))}"
+          required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+        <div *ngIf="submittedResgister && !!rg.phoneNumber.errors" class="invalid-feedback">
+          <div *ngIf="!!rg.phoneNumber.errors.required">Phone is required.</div>
+          <div *ngIf="!!rg.phoneNumber.errors.maxlength">Phone cannot exceed 12 characters.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email-login">Email</label>
+        <input formControlName="email" type="email" class="form-control" [ngClass]="{ 'is-invalid': submittedResgister && !!rg.email.invalid }">
+        <div *ngIf="submittedResgister && !!rg.email.errors" class="invalid-feedback">
+          <div *ngIf="!!rg.email.errors.required">Email is required.</div>
+          <div *ngIf="!!rg.email.errors.email">Email must be a valid email address.</div>
+        </div>
+      </div>
+      <div class="form-group" style="padding-top: 1em">
+        <label for="password-login">Password</label>
+        <input formControlName="password" type="password" (keyup)="onRemoveIsWrong()" class="form-control" [ngClass]="{ 'is-invalid': submittedResgister && !!rg.password.errors}">
+        <div *ngIf="submittedResgister && !!rg.password.errors" class="invalid-feedback">
+          <div *ngIf="!!rg.password.errors.required">Password is required.</div>
+          <div *ngIf="!!rg.password.errors.minlength">Password must be at least 8 characters.</div>
+          <div *ngIf="!!rg.password.errors.maxlength">Password cannot exceed 25 characters.</div>
+        </div>
+      </div>
+      <div class="form-group" style="padding-top: 1em">
+        <label for="password-login">Confirm Password</label>
+        <input formControlName="confirmPassword" (keyup)="onRemoveIsWrong()" type="password" class="form-control">
+      </div>
+      <div class="text-center" style="padding-top: 1em">
+        <button (click)="btnRegister()" class="btn btn-template-outlined"><i class="fa fa-user-md"></i> Register</button>
+      </div>
+    </form>
+      <p class="text-center text-muted mt-3">Are you ready <a class="pointer" (click)="changeSignIn()"><strong> Login ?</strong></a></p>
+  </div>
+</ng-template>

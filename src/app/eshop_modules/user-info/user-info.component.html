@@ -1,0 +1,12 @@
+<div class="panel panel-default sidebar-menu with-icons ">
+  <div class="panel-heading">
+    <h3 class="h4 panel-title">My Account</h3>
+  </div>
+  <div class="panel-body" *ngIf="userInfo">
+    <ul class="nav nav-pills flex-column text-sm" [ngClass]="{'active': true}">
+      <li class="nav-item"><a [routerLink]="[ '/my-account']" class="nav-link">Profile</a></li>
+      <li class="nav-item"><a [routerLink]="[ '/orderdetail']" class="nav-link">Order History</a></li>
+      <li class="nav-item"><a [routerLink]="[ '/set-password']" class="nav-link">Set Password</a></li>
+    </ul>
+  </div>
+</div>

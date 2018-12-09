@@ -1,0 +1,39 @@
+<ng-template [ngIf]="dataForDetail">
+  <div id="productMain" class="row">
+    <div class="col-sm-6">
+      <div data-slider-id="1" class="owl-carousel shop-detail-carousel owl-loaded owl-drag">
+        <div class="owl-stage-outer">
+          <div class="owl-stage" style="transform: translate3d(0px, 50px, 0px); transition: all 0.25s ease 0s; width: 350px; height: 350px;">
+            <div class="image" style="width: 350px;">
+              <div> <img src="{{dataForDetail.Images}}" class="img-fluid"></div>
+            </div>
+            <div class="ribbon-holder" *ngIf="dataForDetail.Quantity === 0">
+              <div class="ribbon soldout ml-3">sold out</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="box">
+        <div class="sizes">
+          <h2>{{dataForDetail.NameProduct}}</h2>
+        </div>
+        <p class="price">{{dataForDetail.Price | currency}}</p>
+        <p class="text-center">
+          <input #quantity min="1" type="number" class="mr-2" max="{{dataForDetail.Quantity}}" value="1" (keyup)="onUpdateQuantity($event)">
+          <button type="submit" [disabled]="dataForDetail.Quantity === 0" (click)="addCart(dataForDetail.Id, quantity.valueAsNumber)"
+            class="btn btn-template-outlined"><i class="fa fa-shopping-cart"></i>
+            Add to cart</button>
+          <button type="submit" data-toggle="tooltip" data-placement="top" class="btn btn-default" data-original-title="Add to wishlist"><i
+              class="fa fa-heart-o"></i></button>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div id="details" class="box mb-4 mt-4">
+    <p></p>
+    <h4>Product details</h4>
+    <p>{{dataForDetail.Content}}</p>
+  </div>
+</ng-template>

@@ -1,0 +1,98 @@
+<div id="error-page" *ngIf="isEmpty">
+  <div class="container bar">
+    <div id="error-page" class="col-md-8 mx-auto text-center">
+      <p class="text-center"><img style="height: 15em" src="assets/img/shoppingcart.png" alt="Obaju template"></p>
+      <h3>Your shopping cart is empty</h3>
+      <p class="buttons"><a [routerLink]="['']" class="btn btn-template-outlined"><i class="fa fa-home"></i> Go
+          Shopping Now </a></p>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="isEmpty; else elseTemplate"></ng-container>
+<ng-template hidden #elseTemplate>
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="mt-0 pb-0 no-horizontal-padding">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th colspan="2">Product</th>
+                <th>Quantity</th>
+                <th>Unit price</th>
+                <th>Discount</th>
+                <th colspan="2">Total</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="listProduct.length > 0">
+              <tr *ngFor="let product of listProduct, let i = index">
+                <td><a><img *ngIf="product.Images" src="{{product.Images}}" class="img-fluid">
+                    <img *ngIf="product.Image" src="{{product.Image}}" class="img-fluid">
+                  </a></td>
+                <td><a>{{product.NameProduct}}</a></td>
+                <td>
+                  <input type="number" class="display: block" (change)="onUpdateQuantity($event, i)" min="1"
+                    max="{{product.Quantity}}" value="{{quantity[i]}}">
+                </td>
+                <td>{{product.Price | currency}}</td>
+                <td>0</td>
+                <!-- {{product.Price * product.PromotionPrice / 100 | currency}} -->
+                <td style="width: 12em"> {{product.Price * quantity[i] | currency}}</td>
+                <!-- {{(product.Price - (product.Price * product.PromotionPrice / 100)) * quantity[i] | currency}} -->
+                <td><a class="pointer" (click)="btnDelete(product.Id)"><i class="fa fa-trash-o"></i></a></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th colspan="5">Total</th>
+                <th colspan="2">{{total | currency}}</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="box-footer d-flex justify-content-between align-items-center">
+          <div class="left-col mr-1">
+            <button class="btn btn-secondary" (click)="btnBack()"><i class="fa fa-chevron-left"></i> Continue shopping</button>
+          </div>
+          <div class="right-col ml-1">
+            <button class="btn btn-secondary" (click)="btnUpdate()"><i class="fa fa-refresh"></i> Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div id="order-summary" class="box mt-0">
+        <div class="box-header mt-0">
+          <h3>Order summary</h3>
+        </div>
+        <p class="text-muted">Shipping and additional costs are calculated based on the values you have entered.</p>
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>Order subtotal</td>
+                <th align="left">{{total | currency}}</th>
+              </tr>
+              <tr>
+                <td>Shipping and <br> handling</td>
+                <th align="left">$0.00</th>
+              </tr>
+              <tr>
+                <td>Tax</td>
+                <th align="left">$0.00</th>
+              </tr>
+              <tr>
+                <td>Total</td>
+                <th align="left">{{total | currency}}</th>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-between align-items-center">
+            <button (click)="btnCheckout()" class="btn btn-template-outlined" [disabled]="listProduct.length == 0">Payment
+              <i class="fa fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

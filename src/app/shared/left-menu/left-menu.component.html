@@ -1,0 +1,21 @@
+<!-- MENUS AND FILTERS-->
+<div class="panel panel-default sidebar-menu">
+  <div class="panel-heading row">
+    <div class="col-2">
+      <h3 class="panel-title">Categories</h3>
+    </div>
+    <div class="col-9 mt-2" id="navcollapse" role="navigation" class="navbar navbar-expand-lg collapsed" (click)="isCollapsed = !isCollapsed">
+      <i *ngIf="!isCollapsed" class="fa fa-chevron-down pull-right navbar-toggler" data-toggle="collapse" data-target="#navigation"></i>
+      <i *ngIf="isCollapsed" class="fa fa-chevron-right pull-right navbar-toggler" data-toggle="collapse" data-target="#navigation"></i>
+    </div>
+  </div>
+  <div class="panel-body" [ngbCollapse]="isCollapsed">
+    <ul *ngIf="dataListCat" class="nav nav-pills flex-column text-sm category-menu">
+      <li class="nav-item active" *ngFor="let item of dataListCat.Data">
+        <a (click)="navigate(item.Id)" class="pointer activeHref nav-link d-flex align-items-center justify-content-between ">
+          <span class="active">{{item.NameCategories}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

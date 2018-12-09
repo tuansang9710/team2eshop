@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-lg-3">
+    <app-t2-left-menu (open)="onOpen($event)"></app-t2-left-menu>
+  </div>
+  <div class="col-lg-9">
+    <div class="heading">
+      <h3>Show Product</h3>
+    </div>
+    <ng-template [ngIf]="!isError">
+      <app-cart [dataListProduct]="dataListProduct "></app-cart>
+      <p class="loadMore text-center" *ngIf="isLoadMore"><a class="btn btn-template-outlined" (click)="btnLoadMoreProduct()"><i
+            class="fa fa-chevron-down"></i>
+          Load more</a></p>
+    </ng-template>
+    <app-t2-pagenotfound *ngIf="isError"></app-t2-pagenotfound>
+  </div>
+</div>

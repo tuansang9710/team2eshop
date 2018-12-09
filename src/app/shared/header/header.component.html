@@ -1,0 +1,67 @@
+<!--Logout Profile Item-->
+<div class="top-bar">
+  <div class="container">
+    <div class="row d-flex align-items-center">
+      <div class="col-md-6 d-md-block d-none">
+      </div>
+      <div class="col-md-6">
+        <div class="d-flex justify-content-md-end justify-content-between">
+          <div class="mr-5">
+            <i class="pointer draggable btn fas fa-shopping-cart fa-xs" [routerLink]="['order']" routerLinkActive="router-link-active"></i>
+            <span class="cart-items-count"><span class=" notification-counter" *ngIf="getTotalItem() !== 0">{{
+                getTotalItem() }}</span></span>
+          </div>
+          <div class="mr-5 draggable btn" *ngIf="isLogin">
+            <div mat-button [matMenuTriggerFor]="menu" class="d-inline-block">
+              <i class="fa fa-user-circle-o fa-lg"></i>
+              <span class="d-none d-md-inline-block" *ngIf="userInfo.UserName === null || userInfo.UserName === ''">&nbsp;
+                NoName</span>
+              <span class="d-none d-md-inline-block" *ngIf="!(userInfo.UserName === null || userInfo.UserName === '')">&nbsp;
+                {{getNameUser()}}</span>
+              <mat-menu #menu="matMenu">
+                <a mat-menu-item class="dropdown-item customFont" [routerLink]="['my-account']">My Account</a>
+                <div class="dropdown-divider"></div>
+                <a mat-menu-item class="dropdown-item customFont" (click)="btnLogout()">Log out</a>
+              </mat-menu>
+            </div>
+          </div>
+          <!--Login Register Item-->
+          <div class="mr-5 draggable btn" *ngIf="!isLogin">
+            <a (click)="btnLogin()" class="pointer login-btn"><i class="fa fa-sign-in fa-lg"></i><span class="d-none d-md-inline-block">Sign
+                In</span>
+            </a>
+            <a (click)="btnRegister()" class="pointer signup-btn"><i class="fas fa-registered fa-lg"></i><span class="d-none d-md-inline-block">Sign
+                Up</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="navbar" role="navigation" class="navbar navbar-expand-lg">
+  <div class="container">
+    <a [routerLink]="['']" (click)="clearDataSearch()" routerLinkActive="router-link-active" class="pointer navbar-brand home">
+      <img src="./assets/img/team2.png" style=" width: 200px;" class="d-none d-md-inline-block">
+      <img src="./assets/img/team2.png" style=" width: 100px;" class="d-inline-block d-md-none">
+    </a>
+    <!-- Search Input-->
+    <div class="col-lg-4 mt-5">
+      <div class="panel-body ">
+        <form class="example-form-search" [formGroup]='searchForm'>
+          <mat-form-field class="example-full-width-search">
+            <input matInput placeholder="Search" [matAutocomplete]="auto" formControlName='searchInput'>
+          </mat-form-field>
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <ng-container>
+              <mat-option *ngFor="let data of Data" [value]="data" (click)="navigate(data.Id)">
+                <img src="{{data.Images}}" class="img-small">
+                <span>{{ data.NameProduct }}</span>
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

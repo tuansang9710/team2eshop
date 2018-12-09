@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-lg-3 col-md-6">
+    <div class="box text-uppercase mt-0 mb-small">
+      <h3>You may also like these products</h3>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6" *ngFor="let product of dataForRecommend">
+    <div class="product">
+      <div class="image"><a [routerLink]="[ '/detail', product.Id ]">
+          <img src="{{product.Images}}" class="img-fluid image1">
+        </a></div>
+      <div class="text">
+        <h3 class="h5"><a class="pointer" [routerLink]="[ '/detail', product.Id ]">{{product.NameProduct}}</a></h3>
+        <p class="price">{{product.Price | currency}}</p>
+      </div>
+    </div>
+  </div>
+</div>

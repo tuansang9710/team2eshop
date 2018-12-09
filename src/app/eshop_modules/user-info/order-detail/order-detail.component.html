@@ -1,0 +1,89 @@
+<div class="row" *ngIf="userInfo">
+  <div class="col-lg-3">
+    <app-t2-user-info></app-t2-user-info>
+  </div>
+  <div class="col-lg-9">
+    <div class="col-lg-12">
+      <div class="heading">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="heading">
+              <h3>Order history</h3>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th style="width: 15%">ID</th>
+                    <th style="width: 35%">Date</th>
+                    <th style="width: 30%">Total</th>
+                    <th style="width: 25%">Status</th>
+                  </tr>
+                </thead>
+              </table>
+              <mat-accordion>
+                <mat-expansion-panel *ngFor="let item of ListOrderDetail, let i = index">
+                  <mat-expansion-panel-header>
+                    <th style="width: 8%"> #{{ item.Id }}</th>
+                    <td style="width: 35%" class="fix-side-mat-table">{{ item.CreateDate | date: 'dd/MM/yyyy' }}</td>
+                    <td style="width: 30%" class="fix-side-mat-table">{{item.TotalAmount | currency}}</td>
+                    <td style="width: 25%" class="fix-side-mat-table"><span [ngClass]="item.Status?'badge badge-success':'badge badge-info'">{{item.Status?'Delivered':'Delivering'}}</span></td>
+                  </mat-expansion-panel-header>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th colspan="2" class="border-top-0">Product</th>
+                          <th class="border-top-0">Quantity</th>
+                          <th class="border-top-0">Unit price</th>
+                          <th class="border-top-0">Discount</th>
+                          <th class="border-top-0">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let itemChild of item.ListOrderDetail">
+                          <td><a (click)="navigateDetail(itemChild.Id)" class="pointer"><img src="{{itemChild.Image}}"
+                                alt="{{itemChild.NameProduct}}" class="img-fluid"></a></td>
+                          <td><a (click)="navigateDetail(itemChild.Id)" class="pointer">{{itemChild.NameProduct}}</a></td>
+                          <td>{{itemChild.Quantity}}</td>
+                          <td>{{ itemChild.Price|currency }}</td>
+                          <td>$0.00</td>
+                          <td>{{itemChild.Amount|currency}}</td>
+                        </tr>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th colspan="5" class="text-right">Order subtotal</th>
+                          <th>{{item.TotalAmount|currency}}</th>
+                        </tr>
+                        <tr>
+                          <th colspan="5" class="text-right">Shipping and handling</th>
+                          <th>$0.00</th>
+                        </tr>
+                        <tr>
+                          <th colspan="5" class="text-right">Total</th>
+                          <th>{{item.TotalAmount|currency}}</th>
+                        </tr>
+                        <tr *ngIf="item.Status === false">
+                          <th colspan="5" class="text-right">Confirm Delivered</th>
+                          <th><button (click)="changeStatus(item.Id)" class="btn btn-template-outlined"
+                              type="submit">
+                              Delivered </button></th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+              <mat-paginator [length]="total" [pageIndex]="page - 1" [pageSize]="pageSize" (page)="pageEvent = handingPage($event)">
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
